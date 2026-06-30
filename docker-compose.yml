@@ -1,7 +1,9 @@
 services:
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     container_name: portal_nginx
     ports:
       - "80:80"
