@@ -37,6 +37,8 @@ services:
       context: ./dnsmasq
       dockerfile: Dockerfile
     container_name: portal_dns
+    ports:
+      - "53:53/udp"
     volumes:
       - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
     cap_add:
