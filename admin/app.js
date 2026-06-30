@@ -32,7 +32,7 @@ function login() {
   const token = document.getElementById('tokenInput').value.trim();
   if (!token) return;
   setToken(token);
-  fetch(API + '/api/sessions', { headers: { 'Authorization': 'Bearer ' + token } })
+  fetch(API + '/sessions', { headers: { 'Authorization': 'Bearer ' + token } })
     .then(r => {
       if (r.ok) { window.location.href = '/admin/'; }
       else {
