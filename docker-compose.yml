@@ -33,7 +33,9 @@ services:
     restart: unless-stopped
 
   dnsmasq:
-    image: strm/dnsmasq
+    build:
+      context: ./dnsmasq
+      dockerfile: Dockerfile
     container_name: portal_dns
     volumes:
       - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
