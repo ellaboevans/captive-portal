@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="/admin/style.css">
+</head>
+<body class="login-page">
+  <div class="login-card">
+    <h1>Admin</h1>
+    <p>Enter your admin token to continue.</p>
+    <input type="password" id="tokenInput" placeholder="Admin token" autocomplete="off">
+    <button onclick="login()">Sign In</button>
+    <p id="loginError" class="status error"></p>
+  </div>
+  <script src="/admin/app.js"></script>
+</body>
+</html>
