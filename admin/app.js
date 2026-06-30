@@ -16,8 +16,8 @@ function apiHeaders() {
 
 async function api(path, options = {}) {
   const res = await fetch(API + path, {
-    headers: apiHeaders(),
-    ...options
+    ...options,
+    headers: { ...apiHeaders(), ...options.headers }
   });
   if (res.status === 403) {
     clearToken();
@@ -45,6 +45,10 @@ function login() {
       document.getElementById('loginError').textContent = 'Could not reach server';
     });
 }
+
+document.getElementById('tokenInput')?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') login();
+});
 
 // Logout
 function logout() {
@@ -84,12 +88,22 @@ async function loadSessions() {
   sessions.forEach(s => {
     const tr = document.createElement('tr');
     tr.id = 'session-' + s.ip.replace(/\./g, '-');
-    tr.innerHTML = `
-      <td>${s.ip}</td>
-      <td>${new Date(s.created_at).toLocaleString()}</td>
-      <td>${new Date(s.expires_at).toLocaleString()}</td>
-      <td><button class="revoke-btn" onclick="revokeSession('${s.ip}')">Revoke</button></td>
-    `;
+    const tdIp = document.createElement('td');
+    tdIp.textContent = s.ip;
+    const tdCreated = document.createElement('td');
+    tdCreated.textContent = new Date(s.created_at).toLocaleString();
+    const tdExpires = document.createElement('td');
+    tdExpires.textContent = new Date(s.expires_at).toLocaleString();
+    const tdAction = document.createElement('td');
+    const revokeBtn = document.createElement('button');
+    revokeBtn.className = 'revoke-btn';
+    revokeBtn.textContent = 'Revoke';
+    revokeBtn.onclick = () => revokeSession(s.ip);
+    tdAction.appendChild(revokeBtn);
+    tr.appendChild(tdIp);
+    tr.appendChild(tdCreated);
+    tr.appendChild(tdExpires);
+    tr.appendChild(tdAction);
     tbody.appendChild(tr);
   });
 }
@@ -103,6 +117,11 @@ async function revokeSession(ip) {
     const row = document.getElementById('session-' + ip.replace(/\./g, '-'));
     if (row) row.style.opacity = '0.3';
     setTimeout(() => { if (row) row.remove(); }, 300);
+  } else if (res) {
+    const data = await res.json().catch(() => ({}));
+    alert(data.detail || 'Failed to revoke session');
+  } else {
+    alert('Could not reach server');
   }
 }
 
@@ -127,7 +146,7 @@ async function generateVouchers() {
     status.className = 'status success';
     status.textContent = count + ' vouchers generated';
     results.style.display = 'block';
-    data.vouchers.forEach(code => {
+    (data.vouchers || []).forEach(code => {
       const li = document.createElement('li');
       li.textContent = code;
       li.title = 'Click to copy';
