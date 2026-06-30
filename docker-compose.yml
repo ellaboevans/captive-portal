@@ -5,6 +5,9 @@ services:
     container_name: portal_nginx
     ports:
       - "80:80"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./splash:/usr/share/nginx/html:ro
