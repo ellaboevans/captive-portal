@@ -1,2 +1,2 @@
 FROM nginx:alpine
-RUN mkdir -p /usr/share/nginx/html/admin
+COPY admin /usr/share/nginx/admin/
