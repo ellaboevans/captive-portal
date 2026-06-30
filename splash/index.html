@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome — Connect to the Internet</title>
+  <title>Guest Wi-Fi</title>
   <link rel="stylesheet" href="/splash/style.css">
 </head>
 <body>
+  <div class="bg-grid"></div>
   <div class="portal-card">
-    <h1>Welcome</h1>
-    <p>Accept our terms to connect to the internet.</p>
-
-    <input type="text" id="voucher" placeholder="Voucher code (if required)" />
-
-    <button onclick="authenticate()">Connect Now</button>
-
-    <p id="status"></p>
+    <svg class="wifi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/>
+    </svg>
+    <h1>Guest Wi-Fi</h1>
+    <p class="subtitle">Accept the terms below to connect to the internet.</p>
+    <p class="terms">By connecting, you agree to our <a href="#">acceptable use policy</a>.</p>
+    <div class="voucher-field" id="voucherField" style="display:none">
+      <input type="text" id="voucher" placeholder="Voucher code" autocomplete="off">
+    </div>
+    <button id="connectBtn" onclick="authenticate()">
+      <span id="btnText">Connect Now</span>
+      <span id="btnSpinner" class="spinner" style="display:none"></span>
+    </button>
+    <p id="status" class="status"></p>
   </div>
-
+  <p class="footer">Powered by Captive Portal</p>
   <script src="/splash/app.js"></script>
 </body>
 </html>
